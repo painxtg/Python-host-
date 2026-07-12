@@ -2,44 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#060912" />
   <title>Sagor Panel | Personal Bot Host</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    :root{--bg:#060912;--card:#0f1624;--card2:#111b2d;--muted:#94a3b8;--text:#f8fafc;--line:rgba(255,255,255,.08);--pri:#60a5fa;--ok:#34d399;--bad:#f87171;--warn:#fbbf24;--shadow:0 18px 40px rgba(0,0,0,.35);}
+    :root{
+      --bg:#060912;
+      --bg2:#0a1120;
+      --card:#0f1624;
+      --card2:#111b2d;
+      --muted:#94a3b8;
+      --text:#f8fafc;
+      --line:rgba(255,255,255,.08);
+      --pri:#60a5fa;
+      --ok:#34d399;
+      --bad:#f87171;
+      --warn:#fbbf24;
+      --shadow:0 18px 40px rgba(0,0,0,.35);
+      --radius:22px;
+    }
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',sans-serif}
-    body{min-height:100vh;background:radial-gradient(circle at top left,rgba(96,165,250,.18),transparent 35%),radial-gradient(circle at bottom right,rgba(52,211,153,.12),transparent 30%),var(--bg);color:var(--text)}
-    .wrap{max-width:1320px;margin:0 auto;padding:24px}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top left,rgba(96,165,250,.18),transparent 30%),
+        radial-gradient(circle at bottom right,rgba(52,211,153,.12),transparent 26%),
+        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      touch-action:manipulation;
+    }
+    button,input,textarea,select{font-size:16px}
+    .wrap{max-width:1360px;margin:0 auto;padding:18px; padding-bottom:28px}
     .hidden{display:none !important}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#60a5fa,#34d399);display:grid;place-items:center;box-shadow:var(--shadow)}
-    .logo i{font-size:1.2rem;color:#fff}
-    h1{font-size:1.45rem}
-    .sub{color:var(--muted);font-size:.92rem;margin-top:4px}
-    .pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:.88rem}
-    .grid{display:grid;gap:18px}
+
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+      margin-bottom:18px;padding:10px 0;
+      backdrop-filter:saturate(120%) blur(10px);
+    }
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:50px;height:50px;border-radius:16px;
+      background:linear-gradient(135deg,#60a5fa,#34d399);
+      display:grid;place-items:center;box-shadow:var(--shadow);flex:0 0 auto;
+    }
+    .logo i{font-size:1.15rem;color:#fff}
+    h1{font-size:1.45rem;line-height:1.1}
+    .sub{color:var(--muted);font-size:.92rem;margin-top:4px;line-height:1.4}
+    .pill{
+      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:.88rem;
+      white-space:nowrap;
+    }
+    .grid{display:grid;gap:16px}
     .stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:18px 0}
     .stats2{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
     .card-pad{padding:18px}
-    .metric{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .metric{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-height:100px}
     .metric h3{font-size:.9rem;color:var(--muted);font-weight:500}
-    .metric .val{font-size:1.5rem;font-weight:700;margin-top:8px}
-    .metric .ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(96,165,250,.12);color:#bfdbfe}
+    .metric .val{font-size:1.55rem;font-weight:700;margin-top:8px;letter-spacing:-.02em}
+    .metric .ico{
+      width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+      background:rgba(96,165,250,.12);color:#bfdbfe;flex:0 0 auto;
+    }
     .section{margin-top:18px}
     .section h2{font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-    .row{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
-    .drop{border:1.5px dashed rgba(96,165,250,.45);background:rgba(96,165,250,.05);border-radius:22px;padding:28px;text-align:center;cursor:pointer;transition:.2s}
-    .drop:hover{transform:translateY(-2px);border-color:#93c5fd}
+    .row{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
+    .drop{
+      border:1.5px dashed rgba(96,165,250,.45);
+      background:rgba(96,165,250,.05);
+      border-radius:22px;
+      padding:28px;
+      text-align:center;
+      cursor:pointer;
+      transition:transform .18s ease,border-color .18s ease,background .18s ease;
+      user-select:none;
+    }
+    .drop:hover{transform:translateY(-2px);border-color:#93c5fd;background:rgba(96,165,250,.08)}
     .drop i{font-size:2rem;color:#93c5fd;margin-bottom:10px}
-    input,textarea,select{width:100%;background:#08111d;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none}
-    textarea{min-height:320px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-    .btn{border:none;border-radius:14px;padding:11px 14px;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    input,textarea,select{
+      width:100%;
+      background:#08111d;color:var(--text);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 14px;
+      outline:none;
+    }
+    input:focus,textarea:focus,select:focus{border-color:rgba(96,165,250,.55);box-shadow:0 0 0 4px rgba(96,165,250,.08)}
+    textarea{
+      min-height:320px;
+      resize:vertical;
+      font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+      line-height:1.5;
+    }
+    .btn{
+      border:none;border-radius:14px;padding:11px 14px;font-weight:700;
+      cursor:pointer;transition:transform .18s ease,opacity .18s ease,background .18s ease;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      touch-action:manipulation;
+    }
     .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0);opacity:.95}
     .btn-pri{background:linear-gradient(135deg,#60a5fa,#3b82f6);color:#fff}
     .btn-ok{background:rgba(52,211,153,.12);color:#86efac;border:1px solid rgba(52,211,153,.35)}
     .btn-bad{background:rgba(248,113,113,.12);color:#fca5a5;border:1px solid rgba(248,113,113,.35)}
@@ -47,33 +126,125 @@
     .btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--line)}
     .btns{display:flex;flex-wrap:wrap;gap:10px}
     .apps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .app{padding:18px}
+    .app{
+      padding:18px;
+      overflow:hidden;
+      content-visibility:auto;
+      contain-intrinsic-size: 400px;
+    }
     .app-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
-    .app-name{font-size:1.08rem;font-weight:700}
-    .badge{padding:6px 10px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid transparent}
+    .app-name{font-size:1.08rem;font-weight:700;word-break:break-word}
+    .badge{
+      padding:6px 10px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid transparent;
+      letter-spacing:.04em;
+    }
     .on{color:var(--ok);background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3)}
     .off{color:var(--bad);background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3)}
-    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin:12px 0}
-    .log{margin-top:12px;background:#020617;border:1px solid var(--line);border-radius:18px;padding:14px;max-height:280px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;color:#93c5fd}
+    .meta{
+      display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin:12px 0;
+      line-height:1.4;
+    }
+    .details{display:grid;gap:12px}
+    .details-toggle{display:none}
+    .log{
+      margin-top:4px;
+      background:#020617;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      max-height:250px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+      font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+      font-size:.84rem;
+      color:#93c5fd;
+      line-height:1.45;
+    }
     .muted{color:var(--muted)}
     .login{max-width:480px;margin:12vh auto 0}
     .center{text-align:center}
     .space{height:14px}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
     .search{min-width:240px;flex:1}
-    .file-list{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:16px;padding:8px;background:rgba(255,255,255,.02)}
-    .file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;cursor:pointer}
+    .file-list{
+      max-height:min(56vh,380px);overflow:auto;
+      border:1px solid var(--line);border-radius:16px;padding:8px;background:rgba(255,255,255,.02)
+    }
+    .file-item{
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      padding:10px 12px;border-radius:12px;cursor:pointer;
+    }
     .file-item:hover{background:rgba(255,255,255,.04)}
     .file-item.active{background:rgba(96,165,250,.14)}
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.7);display:grid;place-items:center;padding:18px;z-index:50}
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(2,6,23,.7);
+      display:grid;place-items:center;padding:18px;z-index:50;
+      backdrop-filter:blur(4px);
+    }
     .modal{width:min(980px,100%);max-height:90vh;overflow:auto;padding:18px}
     .modal-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}
-    .toastbox{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:60}
-    .toast{background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);min-width:240px}
+    .toastbox{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:60;max-width:min(92vw,320px)}
+    .toast{
+      background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+      box-shadow:var(--shadow);min-width:240px;transition:opacity .2s ease,transform .2s ease;
+    }
     .toast.ok{border-color:rgba(52,211,153,.35)}
     .toast.bad{border-color:rgba(248,113,113,.35)}
     .toast.warn{border-color:rgba(251,191,36,.35)}
-    @media (max-width: 980px){.stats,.stats2,.row,.apps,.modal-grid{grid-template-columns:1fr}}
+    .skeleton{animation:pulse 1.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.72}}
+    @media (hover:hover) and (pointer:fine){
+      .card:hover,.app:hover{transform:translateY(-1px)}
+    }
+    @media (max-width: 1180px){
+      .stats,.stats2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .apps{grid-template-columns:1fr}
+    }
+    @media (max-width: 980px){
+      .row,.modal-grid{grid-template-columns:1fr}
+      .search{min-width:0;width:100%}
+      .toolbar{align-items:stretch}
+      .toolbar > *{width:100%}
+    }
+    @media (max-width: 768px){
+      .wrap{padding:12px;padding-bottom:24px}
+      .topbar{
+        position:sticky;top:0;
+        margin-bottom:12px;
+        padding:10px 0 12px;
+        background:linear-gradient(180deg,rgba(6,9,18,.96),rgba(6,9,18,.72));
+      }
+      .brand{gap:12px}
+      .logo{width:44px;height:44px;border-radius:14px}
+      h1{font-size:1.16rem}
+      .sub{font-size:.86rem}
+      .stats,.stats2{grid-template-columns:1fr}
+      .card-pad{padding:14px}
+      .metric{min-height:auto}
+      .metric .val{font-size:1.3rem}
+      .drop{padding:20px;border-radius:18px}
+      .btns{gap:8px}
+      .btn{padding:10px 12px;border-radius:12px;width:100%}
+      .btns .btn{flex:1 1 100%}
+      .app{padding:14px}
+      .app-top{gap:10px}
+      .app-name{font-size:1rem}
+      .details-toggle{display:inline-flex}
+      .details{
+        display:none;
+        margin-top:10px;
+        padding-top:10px;
+        border-top:1px solid var(--line);
+      }
+      .details.open{display:grid}
+      .meta{font-size:.84rem}
+      .log{max-height:180px;font-size:.8rem;padding:12px}
+      .toastbox{left:12px;right:12px;bottom:12px;max-width:none}
+      .toast{min-width:0;width:100%}
+      .modal{padding:14px;max-height:92vh}
+      .file-list{max-height:38vh}
+    }
   </style>
 </head>
 <body>
@@ -99,6 +270,7 @@
       </div>
       <div class="space"></div>
       <input id="password" type="password" placeholder="Master password" onkeydown="if(event.key==='Enter') login()" />
+      <div class="space"></div>
       <button class="btn btn-pri" style="width:100%" onclick="login()"><i class="fa-solid fa-shield-halved"></i> Login</button>
     </div>
 
@@ -112,7 +284,7 @@
           <div id="drop" class="drop" onclick="document.getElementById('file').click()" ondragover="event.preventDefault()" ondrop="dropFile(event)">
             <i class="fa-solid fa-file-zipper"></i>
             <div><strong>Drop .zip or .py here</strong></div>
-            <div class="sub">or click to select file</div>
+            <div class="sub">or tap to select file</div>
             <input id="file" type="file" hidden accept=".zip,.py" onchange="previewFile()" />
           </div>
           <div class="space"></div>
@@ -145,30 +317,75 @@
 
   <script>
     const API = window.location.origin;
+    const REFRESH_MS = 18000;
     let authToken = sessionStorage.getItem('sagor_token') || '';
     let overview = null;
     let apps = [];
     let selectedFile = null;
     let fileModalState = { app: '', path: '', items: [], current: '' };
+    let lastAppsSnapshot = '';
+    let lastOverviewSnapshot = '';
+    const expandedApps = new Set(JSON.parse(localStorage.getItem('sagor_expanded') || '[]'));
 
     function authHeaders(){ return authToken ? { 'X-Auth-Token': authToken } : {}; }
-    function showToast(msg, kind='ok'){ const box=document.getElementById('toastbox'); const el=document.createElement('div'); el.className=`toast ${kind}`; el.innerHTML=msg; box.appendChild(el); setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(10px)';setTimeout(()=>el.remove(),250)},2800); }
-    function showLogin(){ document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('dashboard').classList.add('hidden'); document.getElementById('logout-btn').classList.add('hidden'); }
-    function showDash(){ document.getElementById('login-screen').classList.add('hidden'); document.getElementById('dashboard').classList.remove('hidden'); document.getElementById('logout-btn').classList.remove('hidden'); }
-    function fmt(val, unit=''){ return `${val}${unit}`; }
+    function showToast(msg, kind='ok'){
+      const box = document.getElementById('toastbox');
+      const el = document.createElement('div');
+      el.className = `toast ${kind}`;
+      el.innerHTML = msg;
+      box.appendChild(el);
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          el.style.opacity='0';
+          el.style.transform='translateY(10px)';
+          setTimeout(()=>el.remove(),250);
+        }, 2600);
+      });
+    }
+    function showLogin(){
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('dashboard').classList.add('hidden');
+      document.getElementById('logout-btn').classList.add('hidden');
+    }
+    function showDash(){
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+      document.getElementById('logout-btn').classList.remove('hidden');
+    }
 
     async function login(){
       const password = document.getElementById('password').value.trim();
       if(!password) return showToast('Enter password','warn');
       try{
-        const res = await fetch(`${API}/auth`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password})});
+        const res = await fetch(`${API}/auth`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({password})
+        });
         const data = await res.json();
-        if(res.ok && data.token){ authToken = data.token; sessionStorage.setItem('sagor_token', authToken); showDash(); showToast('Access granted','ok'); await refreshAll(); }
-        else showToast(data.message || 'Login failed','bad');
-      }catch(e){ showToast('Connection failed','bad'); }
+        if(res.ok && data.token){
+          authToken = data.token;
+          sessionStorage.setItem('sagor_token', authToken);
+          showDash();
+          showToast('Access granted','ok');
+          await refreshAll();
+        }else{
+          showToast(data.message || 'Login failed','bad');
+        }
+      }catch(e){
+        showToast('Connection failed','bad');
+      }
     }
 
-    function logout(){ sessionStorage.removeItem('sagor_token'); authToken=''; apps=[]; overview=null; showLogin(); }
+    function logout(){
+      sessionStorage.removeItem('sagor_token');
+      authToken = '';
+      apps = [];
+      overview = null;
+      lastAppsSnapshot = '';
+      lastOverviewSnapshot = '';
+      showLogin();
+    }
 
     function previewFile(fileObj){
       const file = fileObj || document.getElementById('file').files[0];
@@ -176,113 +393,246 @@
       document.getElementById('selected-file').innerText = file ? `${file.name} (${Math.round(file.size/1024)} KB)` : 'No file selected';
     }
 
-    function dropFile(ev){ ev.preventDefault(); const file = ev.dataTransfer.files[0]; if(file){ selectedFile = file; document.getElementById('selected-file').innerText = `${file.name} (${Math.round(file.size/1024)} KB)`; } }
+    function dropFile(ev){
+      ev.preventDefault();
+      const file = ev.dataTransfer.files[0];
+      if(file){
+        selectedFile = file;
+        document.getElementById('selected-file').innerText = `${file.name} (${Math.round(file.size/1024)} KB)`;
+      }
+    }
 
     async function uploadBot(){
       const file = selectedFile || document.getElementById('file').files[0];
       if(!file) return showToast('Select a file first','warn');
-      const fd = new FormData(); fd.append('file', file);
+      const fd = new FormData();
+      fd.append('file', file);
       try{
         const res = await fetch(`${API}/upload`, {method:'POST', headers:authHeaders(), body:fd});
         const data = await res.json();
-        if(res.ok){ showToast(data.message || 'Deployed','ok'); document.getElementById('file').value=''; selectedFile=null; document.getElementById('selected-file').innerText='No file selected'; await refreshAll(); }
-        else showToast(data.error || 'Deploy failed','bad');
-      }catch(e){ showToast('Deploy failed','bad'); }
+        if(res.ok){
+          showToast(data.message || 'Deployed','ok');
+          document.getElementById('file').value = '';
+          selectedFile = null;
+          document.getElementById('selected-file').innerText = 'No file selected';
+          await refreshAll();
+        }else{
+          showToast(data.error || 'Deploy failed','bad');
+        }
+      }catch(e){
+        showToast('Deploy failed','bad');
+      }
     }
 
     async function requestAction(appName, action){
       if(action === 'delete' && !confirm(`Delete ${appName}?`)) return;
       try{
-        const res = await fetch(`${API}/action`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({app_name: appName, action})});
+        const res = await fetch(`${API}/action`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json', ...authHeaders()},
+          body:JSON.stringify({app_name: appName, action})
+        });
         const data = await res.json();
-        if(res.ok){ showToast(data.message || `${action} done`, 'ok'); await refreshAll(); }
-        else showToast(data.error || 'Action failed','bad');
-      }catch(e){ showToast('Action failed','bad'); }
+        if(res.ok){
+          showToast(data.message || `${action} done`, 'ok');
+          await refreshAll();
+        }else{
+          showToast(data.error || 'Action failed','bad');
+        }
+      }catch(e){
+        showToast('Action failed','bad');
+      }
     }
 
-    async function refreshOverview(){
-      const res = await fetch(`${API}/api/overview`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken})});
-      if(res.status === 403){ logout(); showToast('Session expired','bad'); return null; }
-      const data = await res.json(); overview = data; document.getElementById('server-pill').innerText = `Uptime: ${data.server_uptime}`;
-      document.getElementById('metrics').innerHTML = [
-        {t:'Total Bots', v:data.total_apps, i:'fa-layer-group'},
-        {t:'Running Bots', v:data.running_apps, i:'fa-circle-play'},
-        {t:'Sessions', v:data.sessions, i:'fa-key'},
-        {t:'Server CPU', v:`${data.cpu}%`, i:'fa-microchip'},
-      ].map(x=>`<div class="card card-pad metric"><div><h3>${x.t}</h3><div class="val">${x.v}</div></div><div class="ico"><i class="fa-solid ${x.i}"></i></div></div>`).join('');
-      document.getElementById('system-metrics').innerHTML = [
-        {t:'Memory', v:`${data.memory.used_gb} / ${data.memory.total_gb} GB (${data.memory.percent}%)`, i:'fa-memory'},
-        {t:'Disk', v:`${data.disk.used_gb} / ${data.disk.total_gb} GB (${data.disk.percent}%)`, i:'fa-hard-drive'},
-        {t:'Server Uptime', v:data.server_uptime, i:'fa-hourglass-half'},
-        {t:'Auto Restart', v:'Enabled', i:'fa-rotate'},
-      ].map(x=>`<div class="card card-pad metric"><div><h3>${x.t}</h3><div class="val" style="font-size:1rem">${x.v}</div></div><div class="ico"><i class="fa-solid ${x.i}"></i></div></div>`).join('');
-      document.getElementById('quick-info').innerHTML = `
-        <span class="pill">Render ready</span>
-        <span class="pill">Auto restart watch</span>
-        <span class="pill">Live logs</span>
-        <span class="pill">File manager</span>`;
-      return data;
+    async function refreshOverview(silent=false){
+      try{
+        const res = await fetch(`${API}/api/overview`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json', ...authHeaders()},
+          body:JSON.stringify({token:authToken})
+        });
+        if(res.status === 403){
+          logout();
+          if(!silent) showToast('Session expired','bad');
+          return null;
+        }
+        const data = await res.json();
+        const snapshot = JSON.stringify(data);
+        overview = data;
+        if(snapshot !== lastOverviewSnapshot){
+          lastOverviewSnapshot = snapshot;
+          document.getElementById('server-pill').innerText = `Uptime: ${data.server_uptime}`;
+          document.getElementById('metrics').innerHTML = [
+            {t:'Total Bots', v:data.total_apps, i:'fa-layer-group'},
+            {t:'Running Bots', v:data.running_apps, i:'fa-circle-play'},
+            {t:'Sessions', v:data.sessions, i:'fa-key'},
+            {t:'Server CPU', v:`${data.cpu}%`, i:'fa-microchip'},
+          ].map(x=>`<div class="card card-pad metric"><div><h3>${x.t}</h3><div class="val">${x.v}</div></div><div class="ico"><i class="fa-solid ${x.i}"></i></div></div>`).join('');
+          document.getElementById('system-metrics').innerHTML = [
+            {t:'Memory', v:`${data.memory.used_gb} / ${data.memory.total_gb} GB (${data.memory.percent}%)`, i:'fa-memory'},
+            {t:'Disk', v:`${data.disk.used_gb} / ${data.disk.total_gb} GB (${data.disk.percent}%)`, i:'fa-hard-drive'},
+            {t:'Server Uptime', v:data.server_uptime, i:'fa-hourglass-half'},
+            {t:'Auto Restart', v:'Enabled', i:'fa-rotate'},
+          ].map(x=>`<div class="card card-pad metric"><div><h3>${x.t}</h3><div class="val" style="font-size:1rem">${x.v}</div></div><div class="ico"><i class="fa-solid ${x.i}"></i></div></div>`).join('');
+          document.getElementById('quick-info').innerHTML = `
+            <span class="pill">Render ready</span>
+            <span class="pill">Auto restart watch</span>
+            <span class="pill">Live logs</span>
+            <span class="pill">File manager</span>`;
+        }
+        return data;
+      }catch(e){
+        if(!silent) showToast('Overview refresh failed','bad');
+        return null;
+      }
     }
 
-    async function refreshApps(){
-      const res = await fetch(`${API}/my_apps`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken})});
-      if(res.status === 403){ logout(); showToast('Session expired','bad'); return null; }
-      const data = await res.json(); apps = data.apps || [];
-      renderApps();
-      return data;
+    async function refreshApps(silent=false){
+      try{
+        const res = await fetch(`${API}/my_apps`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json', ...authHeaders()},
+          body:JSON.stringify({token:authToken})
+        });
+        if(res.status === 403){
+          logout();
+          if(!silent) showToast('Session expired','bad');
+          return null;
+        }
+        const data = await res.json();
+        const snapshot = JSON.stringify(data.apps || []);
+        if(snapshot !== lastAppsSnapshot){
+          lastAppsSnapshot = snapshot;
+          apps = data.apps || [];
+          renderApps();
+        }
+        return data;
+      }catch(e){
+        if(!silent) showToast('Bot list refresh failed','bad');
+        return null;
+      }
     }
+
+    function isMobile(){ return window.innerWidth <= 768; }
 
     function renderApps(){
       const query = (document.getElementById('search').value || '').toLowerCase().trim();
       const box = document.getElementById('apps');
       const list = apps.filter(a => a.name.toLowerCase().includes(query));
-      if(!list.length){ box.innerHTML = `<div class="card card-pad muted center">No bots found.</div>`; return; }
-      box.innerHTML = list.map(app => `
-        <div class="card app">
-          <div class="app-top">
-            <div>
-              <div class="app-name">${escapeHtml(app.name)}</div>
-              <div class="meta">
-                <span><i class="fa-regular fa-clock"></i> ${escapeHtml(app.uptime || '0s')}</span>
-                <span><i class="fa-solid fa-folder"></i> ${app.files_count || 0} files</span>
-                <span><i class="fa-solid fa-rotate"></i> ${app.restart_count || 0} restarts</span>
+
+      if(!list.length){
+        box.innerHTML = `<div class="card card-pad muted center">No bots found.</div>`;
+        return;
+      }
+
+      const mobile = isMobile();
+      box.innerHTML = list.map(app => {
+        const open = !mobile || expandedApps.has(app.name);
+        const logs = String(app.logs || '').slice(-1200);
+        return `
+          <div class="card app">
+            <div class="app-top">
+              <div>
+                <div class="app-name">${escapeHtml(app.name)}</div>
+                <div class="meta">
+                  <span><i class="fa-regular fa-clock"></i> ${escapeHtml(app.uptime || '0s')}</span>
+                  <span><i class="fa-solid fa-folder"></i> ${app.files_count || 0} files</span>
+                  <span><i class="fa-solid fa-rotate"></i> ${app.restart_count || 0} restarts</span>
+                </div>
               </div>
+              <span class="badge ${app.running ? 'on' : 'off'}">${app.running ? 'RUNNING' : 'STOPPED'}</span>
             </div>
-            <span class="badge ${app.running ? 'on' : 'off'}">${app.running ? 'RUNNING' : 'STOPPED'}</span>
+
+            <div class="details ${open ? 'open' : ''}">
+              <div class="meta">
+                <span><i class="fa-solid fa-memory"></i> ${app.memory_mb || 0} MB</span>
+                <span><i class="fa-solid fa-gauge-high"></i> ${app.cpu_percent || 0}% CPU</span>
+                ${app.start_time ? `<span><i class="fa-solid fa-play"></i> ${new Date(app.start_time).toLocaleString()}</span>` : ''}
+              </div>
+              <div class="btns" style="margin-top:2px">
+                <button class="btn btn-ok" onclick="requestAction('${escapeJs(app.name)}','start')"><i class="fa-solid fa-play"></i> Start</button>
+                <button class="btn btn-warn" onclick="requestAction('${escapeJs(app.name)}','stop')"><i class="fa-solid fa-stop"></i> Stop</button>
+                <button class="btn btn-pri" onclick="requestAction('${escapeJs(app.name)}','restart')"><i class="fa-solid fa-rotate"></i> Restart</button>
+                <button class="btn btn-ghost" onclick="openFiles('${escapeJs(app.name)}')"><i class="fa-solid fa-folder-open"></i> Files</button>
+                <button class="btn btn-bad" onclick="requestAction('${escapeJs(app.name)}','delete')"><i class="fa-solid fa-trash"></i> Delete</button>
+              </div>
+              <div class="log">${escapeHtml(logs || 'No logs yet.')}</div>
+            </div>
+
+            ${mobile ? `<div class="space" style="height:10px"></div>
+              <button class="btn btn-ghost details-toggle" onclick="toggleDetails('${escapeJs(app.name)}')">
+                <i class="fa-solid ${open ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
+                ${open ? 'Hide details' : 'Show details'}
+              </button>` : ''}
           </div>
-          <div class="meta">
-            <span><i class="fa-solid fa-memory"></i> ${app.memory_mb || 0} MB</span>
-            <span><i class="fa-solid fa-gauge-high"></i> ${app.cpu_percent || 0}% CPU</span>
-            ${app.start_time ? `<span><i class="fa-solid fa-play"></i> ${new Date(app.start_time).toLocaleString()}</span>` : ''}
-          </div>
-          <div class="btns" style="margin-top:10px">
-            <button class="btn btn-ok" onclick="requestAction('${escapeJs(app.name)}','start')"><i class="fa-solid fa-play"></i> Start</button>
-            <button class="btn btn-warn" onclick="requestAction('${escapeJs(app.name)}','stop')"><i class="fa-solid fa-stop"></i> Stop</button>
-            <button class="btn btn-pri" onclick="requestAction('${escapeJs(app.name)}','restart')"><i class="fa-solid fa-rotate"></i> Restart</button>
-            <button class="btn btn-ghost" onclick="openFiles('${escapeJs(app.name)}')"><i class="fa-solid fa-folder-open"></i> Files</button>
-            <button class="btn btn-bad" onclick="requestAction('${escapeJs(app.name)}','delete')"><i class="fa-solid fa-trash"></i> Delete</button>
-          </div>
-          <div class="log">${escapeHtml((app.logs || '').slice(-6000))}</div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    function escapeHtml(s){ return String(s || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c])); }
+    function toggleDetails(name){
+      if(expandedApps.has(name)) expandedApps.delete(name);
+      else expandedApps.add(name);
+      localStorage.setItem('sagor_expanded', JSON.stringify([...expandedApps]));
+      renderApps();
+    }
+
+    function escapeHtml(s){
+      return String(s || '').replace(/[&<>'"]/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;',"'" :'&#39;','"':'&quot;'
+      }[c]));
+    }
     function escapeJs(s){ return String(s || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
     async function openFiles(appName, path=''){
       fileModalState = { app: appName, path, items: [], current: '' };
       const root = document.getElementById('modal-root');
-      root.innerHTML = `<div class="modal-backdrop" onclick="closeModal(event)"><div class="modal card card-pad" onclick="event.stopPropagation()"><div class="toolbar"><h2><i class="fa-solid fa-folder-tree"></i> ${escapeHtml(appName)} / <span id="file-path">${escapeHtml(path || '')}</span></h2><button class="btn btn-ghost" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button></div><div class="modal-grid"><div><div class="btns" style="margin-bottom:10px"><button class="btn btn-ghost" onclick="upOne()"><i class="fa-solid fa-turn-up"></i> Up</button><button class="btn btn-pri" onclick="mkdirPrompt()"><i class="fa-solid fa-folder-plus"></i> New Folder</button></div><div id="file-list" class="file-list"></div></div><div><div class="btns" style="margin-bottom:10px"><button class="btn btn-ok" onclick="saveFile()"><i class="fa-solid fa-floppy-disk"></i> Save</button><button class="btn btn-bad" onclick="deleteCurrent()"><i class="fa-solid fa-trash"></i> Delete</button></div><input id="file-name" placeholder="path/to/file.py" /><div class="space"></div><textarea id="file-content" placeholder="Select a text file to edit"></textarea></div></div></div></div>`;
+      root.innerHTML = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal card card-pad" onclick="event.stopPropagation()">
+            <div class="toolbar">
+              <h2><i class="fa-solid fa-folder-tree"></i> ${escapeHtml(appName)} / <span id="file-path">${escapeHtml(path || '')}</span></h2>
+              <button class="btn btn-ghost" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-grid">
+              <div>
+                <div class="btns" style="margin-bottom:10px">
+                  <button class="btn btn-ghost" onclick="upOne()"><i class="fa-solid fa-turn-up"></i> Up</button>
+                  <button class="btn btn-pri" onclick="mkdirPrompt()"><i class="fa-solid fa-folder-plus"></i> New Folder</button>
+                </div>
+                <div id="file-list" class="file-list"></div>
+              </div>
+              <div>
+                <div class="btns" style="margin-bottom:10px">
+                  <button class="btn btn-ok" onclick="saveFile()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                  <button class="btn btn-bad" onclick="deleteCurrent()"><i class="fa-solid fa-trash"></i> Delete</button>
+                </div>
+                <input id="file-name" placeholder="path/to/file.py" />
+                <div class="space"></div>
+                <textarea id="file-content" placeholder="Select a text file to edit"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>`;
       await loadFileList();
     }
 
-    function closeModal(e){ if(e && e.target !== e.currentTarget) return; document.getElementById('modal-root').innerHTML=''; }
+    function closeModal(e){
+      if(e && e.target !== e.currentTarget) return;
+      document.getElementById('modal-root').innerHTML = '';
+    }
+
     async function loadFileList(){
-      const res = await fetch(`${API}/files/list`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken, app_name:fileModalState.app, path:fileModalState.path})});
+      const res = await fetch(`${API}/files/list`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', ...authHeaders()},
+        body:JSON.stringify({token:authToken, app_name:fileModalState.app, path:fileModalState.path})
+      });
       const data = await res.json();
       const box = document.getElementById('file-list');
-      if(!res.ok){ box.innerHTML = `<div class="muted">${escapeHtml(data.error || 'Unable to load')}</div>`; return; }
+      if(!res.ok){
+        box.innerHTML = `<div class="muted">${escapeHtml(data.error || 'Unable to load')}</div>`;
+        return;
+      }
       document.getElementById('file-path').innerText = data.path || '';
       fileModalState.items = data.items || [];
       box.innerHTML = fileModalState.items.map(item => `
@@ -293,8 +643,16 @@
     }
 
     async function openItem(path, type){
-      if(type === 'dir'){ fileModalState.path = path; await loadFileList(); return; }
-      const res = await fetch(`${API}/files/read`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken, app_name:fileModalState.app, path})});
+      if(type === 'dir'){
+        fileModalState.path = path;
+        await loadFileList();
+        return;
+      }
+      const res = await fetch(`${API}/files/read`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', ...authHeaders()},
+        body:JSON.stringify({token:authToken, app_name:fileModalState.app, path})
+      });
       const data = await res.json();
       if(!res.ok) return showToast(data.error || 'Cannot open file', 'bad');
       document.getElementById('file-name').value = path;
@@ -305,29 +663,57 @@
       const path = document.getElementById('file-name').value.trim();
       const content = document.getElementById('file-content').value;
       if(!path) return showToast('Enter file path','warn');
-      const res = await fetch(`${API}/files/write`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken, app_name:fileModalState.app, path, content})});
+      const res = await fetch(`${API}/files/write`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', ...authHeaders()},
+        body:JSON.stringify({token:authToken, app_name:fileModalState.app, path, content})
+      });
       const data = await res.json();
-      if(res.ok){ showToast('Saved','ok'); await loadFileList(); await refreshApps(); }
-      else showToast(data.error || 'Save failed','bad');
+      if(res.ok){
+        showToast('Saved','ok');
+        await loadFileList();
+        await refreshApps(true);
+      }else{
+        showToast(data.error || 'Save failed','bad');
+      }
     }
 
     async function deleteCurrent(){
       const path = document.getElementById('file-name').value.trim();
       if(!path) return showToast('Select a file or folder first','warn');
       if(!confirm(`Delete ${path}?`)) return;
-      const res = await fetch(`${API}/files/delete`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken, app_name:fileModalState.app, path})});
+      const res = await fetch(`${API}/files/delete`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', ...authHeaders()},
+        body:JSON.stringify({token:authToken, app_name:fileModalState.app, path})
+      });
       const data = await res.json();
-      if(res.ok){ showToast('Deleted','ok'); document.getElementById('file-name').value=''; document.getElementById('file-content').value=''; await loadFileList(); await refreshApps(); }
-      else showToast(data.error || 'Delete failed','bad');
+      if(res.ok){
+        showToast('Deleted','ok');
+        document.getElementById('file-name').value='';
+        document.getElementById('file-content').value='';
+        await loadFileList();
+        await refreshApps(true);
+      }else{
+        showToast(data.error || 'Delete failed','bad');
+      }
     }
 
     async function mkdirPrompt(){
       const name = prompt('Folder name or path (e.g. logs/archive)');
       if(!name) return;
-      const res = await fetch(`${API}/files/mkdir`, {method:'POST', headers:{'Content-Type':'application/json', ...authHeaders()}, body:JSON.stringify({token:authToken, app_name:fileModalState.app, path:name})});
+      const res = await fetch(`${API}/files/mkdir`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json', ...authHeaders()},
+        body:JSON.stringify({token:authToken, app_name:fileModalState.app, path:name})
+      });
       const data = await res.json();
-      if(res.ok){ showToast('Folder created','ok'); await loadFileList(); }
-      else showToast(data.error || 'Create failed','bad');
+      if(res.ok){
+        showToast('Folder created','ok');
+        await loadFileList();
+      }else{
+        showToast(data.error || 'Create failed','bad');
+      }
     }
 
     async function upOne(){
@@ -340,13 +726,35 @@
 
     async function refreshAll(){
       if(!authToken) return;
-      await Promise.all([refreshOverview(), refreshApps()]);
+      await Promise.all([refreshOverview(true), refreshApps(true)]);
     }
 
+    let refreshTimer = null;
+    function startAutoRefresh(){
+      if(refreshTimer) clearInterval(refreshTimer);
+      refreshTimer = setInterval(() => {
+        if(!authToken || document.hidden) return;
+        refreshOverview(true);
+        refreshApps(true);
+      }, REFRESH_MS);
+    }
+
+    window.addEventListener('resize', () => renderApps());
+    document.addEventListener('visibilitychange', () => {
+      if(!document.hidden && authToken){
+        refreshOverview(true);
+        refreshApps(true);
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', async () => {
-      if(authToken){ showDash(); await refreshAll(); }
-      else showLogin();
-      setInterval(() => { if(authToken){ refreshOverview(); refreshApps(); } }, 12000);
+      if(authToken){
+        showDash();
+        await refreshAll();
+      }else{
+        showLogin();
+      }
+      startAutoRefresh();
     });
   </script>
 </body>
