@@ -3,567 +3,1219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0f1a" />
-  <title>Sagor Panel • Compact</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Sagor Panel • Pro Compact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    :root {
-      --bg-deep: #080e18;
-      --bg-panel: #0f1726;
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #eef5ff;
-      --muted: #95a9c9;
-      --pri: #5b9cf5;
-      --ok: #34d399;
-      --warn: #fbbf24;
-      --bad: #f87171;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --radius-pill: 40px;
-      --tap-min: 42px;
+    :root{
+      --bg:#07111f;
+      --bg2:#0b1628;
+      --card:rgba(15, 24, 41, .82);
+      --card2:rgba(255,255,255,.04);
+      --border:rgba(255,255,255,.08);
+      --text:#eef4ff;
+      --muted:#93a4bf;
+      --pri:#5b9cf5;
+      --pri2:#2dd4bf;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --bad:#f87171;
+      --shadow:0 18px 45px rgba(0,0,0,.38);
+      --r20:20px;
+      --r16:16px;
+      --r14:14px;
+      --tap:44px;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(91,156,245,.16), transparent 25%),
+        radial-gradient(circle at 90% 75%, rgba(45,212,191,.10), transparent 26%),
+        linear-gradient(180deg, #06101d 0%, #07111f 100%);
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
-    html {
-      scroll-behavior: smooth;
+
+    a{text-decoration:none;color:inherit}
+    button,input,textarea{font:inherit}
+    .app{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      padding:12px;
+      padding-bottom:88px;
     }
-    body {
-      background: radial-gradient(circle at 20% 10%, rgba(70, 130, 250, 0.12), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(52, 211, 153, 0.08), transparent 40%),
-        var(--bg-deep);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      justify-content: center;
-      padding: 8px;
-      margin: 0;
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(16px);
+      border-radius:24px;
     }
-    .app-shell {
-      width: 100%;
-      max-width: 640px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px;
+      margin-bottom:12px;
     }
-    /* glass card */
-    .card {
-      background: rgba(18, 28, 48, 0.8);
-      backdrop-filter: blur(18px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 14px 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
     }
-    .top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+
+    .logo{
+      width:46px;height:46px;
+      border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, #3b82f6, #2dd4bf);
+      box-shadow:0 12px 30px rgba(59,130,246,.22);
+      flex:0 0 auto;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+
+    .brand h1{
+      font-size:1.05rem;
+      line-height:1.1;
+      font-weight:800;
+      letter-spacing:-0.02em;
     }
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, #3b82f6, #10b981);
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 1.2rem;
+    .brand p{
+      font-size:.8rem;
+      color:var(--muted);
+      margin-top:3px;
     }
-    .title h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      line-height: 1.2;
+
+    .status{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+      color:#d8e3f8;
+      font-size:.82rem;
+      font-weight:600;
+      white-space:nowrap;
+      flex:0 0 auto;
     }
-    .title span {
-      font-size: 0.75rem;
-      color: var(--muted);
-      display: block;
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:#fbbf24;
+      box-shadow:0 0 0 4px rgba(251,191,36,.13);
     }
-    .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
+    .dot.ok{
+      background:var(--good);
+      box-shadow:0 0 0 4px rgba(52,211,153,.13);
     }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #fbbf24;
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:12px;
     }
-    .dot.ok {
-      background: #34d399;
-      box-shadow: 0 0 8px #34d399;
+
+    .card{
+      padding:16px;
+      border-radius:24px;
+      background:var(--card);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(16px);
     }
-    .chips-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 4px 0 8px;
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:14px;
     }
-    .chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #cbd5e1;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
+    .section-title h2{
+      font-size:1rem;
+      font-weight:800;
+      letter-spacing:-0.01em;
     }
-    .chip i {
-      font-size: 0.7rem;
+    .section-title span{
+      color:var(--muted);
+      font-size:.82rem;
     }
-    .action-bar {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin: 4px 0 10px;
+
+    .metrics{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
     }
-    .search-wrapper {
-      flex: 2;
-      min-width: 170px;
+
+    .metric{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
     }
-    .search-wrapper input {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 30px;
-      padding: 10px 15px;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
+    .metric .label{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:.78rem;
+      margin-bottom:8px;
     }
-    .btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: white;
-      font-weight: 600;
-      padding: 8px 14px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s;
-      white-space: nowrap;
-      min-height: var(--tap-min);
+    .metric .value{
+      font-size:1.25rem;
+      font-weight:800;
+      letter-spacing:-0.03em;
     }
-    .btn-primary {
-      background: #2563eb;
-      border-color: #3b82f6;
-      color: white;
-      font-weight: 700;
+    .metric .sub{
+      margin-top:6px;
+      color:#b8c5da;
+      font-size:.76rem;
     }
-    .btn-small {
-      padding: 6px 14px;
-      font-size: 0.8rem;
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
     }
-    .bots-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
-      max-height: 55vh;
-      overflow-y: auto;
-      padding-right: 2px;
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.07);
+      color:#d7e2f7;
+      font-size:.8rem;
+      white-space:nowrap;
     }
-    .bot-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 18px;
-      padding: 14px;
-      transition: all 0.2s;
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:14px;
     }
-    .bot-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+
+    .search{
+      flex:1 1 220px;
+      position:relative;
     }
-    .bot-name {
-      font-weight: 700;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .search input{
+      width:100%;
+      min-height:var(--tap);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.24);
+      color:var(--text);
+      outline:none;
+      padding:0 16px 0 42px;
     }
-    .run-badge {
-      font-size: 0.7rem;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      text-transform: uppercase;
+    .search i{
+      position:absolute;
+      left:15px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#9fb0c9;
+      font-size:.95rem;
     }
-    .run-badge.on {
-      background: rgba(52, 211, 153, 0.15);
-      color: #6ee7b7;
+
+    .btn{
+      min-height:var(--tap);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      padding:0 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      transition:.2s ease;
+      font-weight:700;
+      white-space:nowrap;
     }
-    .run-badge.off {
-      background: rgba(248, 113, 113, 0.18);
-      color: #fca5a5;
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
+    .btn.primary{
+      background:linear-gradient(135deg, #2563eb, #4f8cff);
+      border-color:rgba(59,130,246,.35);
     }
-    .bot-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 8px 0 10px;
-      font-size: 0.75rem;
-      color: var(--muted);
+    .btn.good{
+      background:linear-gradient(135deg, #0f9d7a, #2dd4bf);
+      border-color:rgba(45,212,191,.35);
     }
-    .bot-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    .btn.danger{
+      background:rgba(248,113,113,.13);
+      border-color:rgba(248,113,113,.22);
+      color:#ffbaba;
     }
-    .log-preview {
-      background: #020617;
-      border-radius: 12px;
-      padding: 10px;
-      font-family: monospace;
-      font-size: 0.7rem;
-      color: #93c5fd;
-      max-height: 70px;
-      overflow: hidden;
-      margin-top: 8px;
-      cursor: pointer;
-      white-space: pre-wrap;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .btn.small{
+      min-height:38px;
+      padding:0 11px;
+      font-size:.82rem;
+      font-weight:700;
     }
-    .login-card {
-      background: rgba(15, 23, 38, 0.9);
-      padding: 24px;
-      margin-top: 20px;
+
+    .bots{
+      margin-top:12px;
+      display:grid;
+      gap:12px;
+      max-height:62vh;
+      overflow:auto;
+      padding-right:2px;
     }
-    .modal-mask {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 12px;
+    .bot{
+      padding:14px;
+      border-radius:20px;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.06);
+      transition:.2s ease;
     }
-    .modal-content {
-      background: #101b2b;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
-      width: 100%;
-      max-width: 600px;
-      max-height: 85vh;
-      overflow: auto;
-      padding: 16px;
+    .bot:hover{background:rgba(255,255,255,.05)}
+    .bot-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:10px;
     }
-    .flex-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
+    .bot-name{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      font-size:1rem;
+      letter-spacing:-0.01em;
+      min-width:0;
+      word-break:break-word;
     }
-    textarea {
-      background: #0a101c;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      color: white;
-      padding: 12px;
-      font-family: monospace;
-      width: 100%;
-      min-height: 220px;
-      margin: 8px 0;
+    .badge{
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:.72rem;
+      font-weight:800;
+      letter-spacing:.04em;
     }
-    .toast-container {
-      position: fixed;
-      bottom: 20px;
-      right: 16px;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .badge.on{
+      color:#8ef0bf;
+      background:rgba(52,211,153,.12);
     }
-    .toast {
-      background: #1e293b;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      border-left: 4px solid #38bdf8;
-      backdrop-filter: blur(10px);
+    .badge.off{
+      color:#ffb5b5;
+      background:rgba(248,113,113,.12);
     }
-    .hidden {
-      display: none !important;
+    .bot-meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:.78rem;
+      margin-bottom:11px;
+    }
+    .bot-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .log{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:.72rem;
+      line-height:1.5;
+      color:#9fd0ff;
+      background:#020816;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;
+      padding:10px;
+      max-height:78px;
+      overflow:hidden;
+      white-space:pre-wrap;
+      cursor:pointer;
+    }
+
+    .side-stack{
+      display:grid;
+      gap:12px;
+    }
+
+    .mini{
+      padding:16px;
+    }
+
+    .stat-list{
+      display:grid;
+      gap:10px;
+      margin-top:4px;
+    }
+    .stat-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:11px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.05);
+      font-size:.85rem;
+    }
+    .stat-row b{font-size:.95rem}
+    .muted{color:var(--muted)}
+
+    .modal-mask{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.68);
+      backdrop-filter: blur(14px);
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px;
+    }
+    .modal{
+      width:100%;
+      max-width:760px;
+      max-height:88vh;
+      overflow:auto;
+      background:#0d1728;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:26px;
+      box-shadow:0 25px 80px rgba(0,0,0,.55);
+      padding:16px;
+    }
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .modal-head h3{
+      font-size:1.05rem;
+      font-weight:800;
+    }
+    .modal-head p{
+      color:var(--muted);
+      font-size:.82rem;
+      margin-top:4px;
+    }
+    .modal-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .file-list{
+      max-height:210px;
+      overflow:auto;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      margin:10px 0;
+    }
+    .file-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    .file-item:last-child{border-bottom:none}
+    .file-item:hover{background:rgba(255,255,255,.04)}
+    .file-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .file-left span{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width:340px;
+    }
+
+    .input, .textarea{
+      width:100%;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:#07101d;
+      color:var(--text);
+      outline:none;
+      padding:12px 14px;
+    }
+    .textarea{
+      min-height:220px;
+      resize:vertical;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      line-height:1.55;
+      margin-top:10px;
+    }
+    .input::placeholder, .textarea::placeholder{color:#6f85a7}
+
+    .toast-wrap{
+      position:fixed;
+      right:14px;
+      bottom:14px;
+      z-index:1200;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .toast{
+      padding:11px 14px;
+      border-radius:999px;
+      background:#152235;
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow:var(--shadow);
+      font-size:.84rem;
+      color:#e8f1ff;
+      max-width:min(92vw, 380px);
+    }
+    .toast.good{border-left:4px solid var(--good)}
+    .toast.bad{border-left:4px solid var(--bad)}
+    .toast.warn{border-left:4px solid var(--warn)}
+
+    .login{
+      max-width:420px;
+      margin:9vh auto 0;
+      padding:22px;
+    }
+    .login .logo{
+      margin-bottom:14px;
+    }
+    .login h2{
+      font-size:1.25rem;
+      margin-bottom:6px;
+      letter-spacing:-.02em;
+    }
+    .login p{
+      color:var(--muted);
+      font-size:.88rem;
+      margin-bottom:16px;
+    }
+
+    .bottom-nav{
+      display:none;
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:900;
+      padding:10px;
+      border-radius:22px;
+      background:rgba(10,18,31,.9);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .nav-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+    }
+    .nav-btn{
+      min-height:54px;
+      border:none;
+      border-radius:16px;
+      background:transparent;
+      color:#d9e5f7;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-size:.72rem;
+      cursor:pointer;
+    }
+    .nav-btn i{font-size:1rem}
+    .nav-btn.active{
+      background:rgba(91,156,245,.14);
+      color:#ffffff;
+    }
+
+    .hidden{display:none !important}
+
+    @media (max-width: 940px){
+      .grid{grid-template-columns:1fr}
+      .bots{max-height:none}
+    }
+
+    @media (max-width: 720px){
+      .app{padding:10px;padding-bottom:98px}
+      .topbar{padding:14px}
+      .card, .panel{border-radius:22px}
+      .metrics{grid-template-columns:1fr 1fr}
+      .toolbar{gap:8px}
+      .search{flex-basis:100%}
+      .section-title{align-items:flex-start}
+      .section-title span{display:none}
+      .bot-actions .btn{flex:1 1 auto}
+      .bottom-nav{display:block}
+    }
+
+    @media (max-width: 420px){
+      .metrics{grid-template-columns:1fr}
+      .brand h1{font-size:.98rem}
+      .status{font-size:.76rem;padding:8px 11px}
+      .logo{width:42px;height:42px;border-radius:14px}
+      .nav-btn{font-size:.68rem}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important; transition:none !important; animation:none !important}
     }
   </style>
 </head>
 <body>
-  <div class="app-shell" id="appShell">
-    <!-- dynamic content injected -->
+  <div class="app">
+    <div id="appRoot"></div>
   </div>
-  <div id="modalContainer"></div>
-  <div class="toast-container" id="toastBox"></div>
+
+  <div id="modalRoot"></div>
+  <div class="toast-wrap" id="toastRoot"></div>
+
+  <div class="bottom-nav">
+    <div class="nav-grid">
+      <button class="nav-btn active" data-nav="dashboard" onclick="setView('dashboard')"><i class="fa-solid fa-house"></i><span>Dashboard</span></button>
+      <button class="nav-btn" data-nav="bots" onclick="setView('bots')"><i class="fa-solid fa-robot"></i><span>Bots</span></button>
+      <button class="nav-btn" data-nav="deploy" onclick="openDeploy()"><i class="fa-solid fa-cloud-arrow-up"></i><span>Deploy</span></button>
+      <button class="nav-btn" data-nav="settings" onclick="openSettings()"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
+    </div>
+  </div>
 
   <script>
     const API = window.location.origin;
     let authToken = sessionStorage.getItem('sagor_token') || '';
     let appsData = [];
-    let fileState = { app: '', path: '', items: [] };
+    let currentView = 'dashboard';
+    let fileState = { app: '', path: '' };
 
-    function toast(msg, type = 'ok') {
-      const box = document.getElementById('toastBox');
-      const el = document.createElement('div');
-      el.className = 'toast';
-      el.style.borderColor = type === 'bad' ? '#f87171' : '#34d399';
-      el.textContent = msg;
-      box.appendChild(el);
-      setTimeout(() => el.remove(), 3000);
+    const qs = (s, el=document) => el.querySelector(s);
+    const qsa = (s, el=document) => [...el.querySelectorAll(s)];
+
+    function escHtml(s){
+      return String(s ?? '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+    function escJs(s){
+      return String(s ?? '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
     }
 
-    function authHeaders() {
+    function toast(msg, type='good'){
+      const root = document.getElementById('toastRoot');
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.textContent = msg;
+      root.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px)';
+        setTimeout(() => el.remove(), 220);
+      }, 2800);
+    }
+
+    function authHeaders(){
       return authToken ? { 'X-Auth-Token': authToken } : {};
     }
 
-    async function apiFetch(url, method = 'POST', body = null) {
-      const opts = { method, headers: { 'Content-Type': 'application/json', ...authHeaders() } };
+    async function apiFetch(url, method='POST', body=null){
+      const opts = {
+        method,
+        headers: {
+          'Content-Type':'application/json',
+          ...authHeaders()
+        }
+      };
       if (body) opts.body = JSON.stringify(body);
+
       const res = await fetch(url, opts);
-      if (res.status === 403) { logout(); throw new Error('session'); }
-      return res.json();
+      if (res.status === 403){
+        logout();
+        throw new Error('session');
+      }
+      const data = await res.json().catch(() => ({}));
+      return data;
     }
 
-    function renderShell() {
-      const shell = document.getElementById('appShell');
-      if (!authToken) {
-        shell.innerHTML = `
-          <div class="card login-card">
-            <h2 style="margin:0 0 10px">🔐 Master Password</h2>
-            <input id="passInput" type="password" placeholder="Password" style="width:100%; background:#0f1a2b; border:1px solid #334155; padding:12px; border-radius:30px; color:white;" />
-            <button class="btn btn-primary" style="margin-top:12px; width:100%" onclick="login()">Unlock</button>
-          </div>`;
-        return;
-      }
-      shell.innerHTML = `
-        <div class="card">
-          <div class="top-row">
-            <div class="brand">
-              <div class="logo-icon"><i class="fas fa-robot"></i></div>
-              <div class="title"><h2>Sagor Panel</h2><span>compact dashboard</span></div>
+    function renderLogin(){
+      document.getElementById('appRoot').innerHTML = `
+        <div class="card login">
+          <div class="logo"><i class="fa-solid fa-shield-halved fa-lg"></i></div>
+          <h2>Unlock Panel</h2>
+          <p>Enter master password to access the hosting dashboard.</p>
+          <input id="passInput" class="input" type="password" placeholder="Master password" />
+          <button class="btn primary" style="width:100%;margin-top:12px;justify-content:center" onclick="login()">
+            <i class="fa-solid fa-unlock-keyhole"></i> Unlock
+          </button>
+        </div>
+      `;
+    }
+
+    function renderApp(){
+      document.getElementById('appRoot').innerHTML = `
+        <div class="panel topbar">
+          <div class="brand">
+            <div class="logo"><i class="fa-solid fa-robot fa-lg"></i></div>
+            <div style="min-width:0">
+              <h1>Sagor Panel</h1>
+              <p>compact hosting dashboard</p>
             </div>
-            <div class="status-badge" id="serverStatus"><span class="dot"></span> connecting</div>
           </div>
-          <div class="chips-row" id="statsChips"></div>
-          <div class="action-bar">
-            <div class="search-wrapper"><input id="searchBots" placeholder="🔍 Search bots..." oninput="renderBots()" /></div>
-            <button class="btn" onclick="document.getElementById('hiddenFileInput').click()"><i class="fas fa-cloud-upload-alt"></i> Deploy</button>
-            <button class="btn" onclick="refreshAll()"><i class="fas fa-sync-alt"></i></button>
-            <button class="btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+          <div class="status" id="serverStatus"><span class="dot"></span><span>connecting</span></div>
+        </div>
+
+        <div class="grid">
+          <div class="card" id="mainCard">
+            <div class="section-title">
+              <div>
+                <h2 id="viewTitle">Dashboard</h2>
+                <span id="viewSubtitle">Overview, bots and tools in one place</span>
+              </div>
+              <span id="lastRefresh">--</span>
+            </div>
+
+            <div class="metrics" id="metricsArea">
+              <div class="metric">
+                <div class="label"><span>Running Apps</span><i class="fa-solid fa-play"></i></div>
+                <div class="value" id="mRunning">0</div>
+                <div class="sub">Currently online</div>
+              </div>
+              <div class="metric">
+                <div class="label"><span>Stopped Apps</span><i class="fa-solid fa-stop"></i></div>
+                <div class="value" id="mStopped">0</div>
+                <div class="sub">Ready to start</div>
+              </div>
+              <div class="metric">
+                <div class="label"><span>CPU</span><i class="fa-solid fa-microchip"></i></div>
+                <div class="value" id="mCPU">0%</div>
+                <div class="sub">Live server load</div>
+              </div>
+              <div class="metric">
+                <div class="label"><span>RAM</span><i class="fa-solid fa-memory"></i></div>
+                <div class="value" id="mRAM">0%</div>
+                <div class="sub" id="mRAMSub">Memory used</div>
+              </div>
+            </div>
+
+            <div class="chips" id="statsChips"></div>
+
+            <div class="toolbar">
+              <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="searchBots" placeholder="Search bots..." oninput="renderBots()" />
+              </div>
+              <button class="btn primary" onclick="openDeploy()"><i class="fa-solid fa-cloud-arrow-up"></i> Deploy</button>
+              <button class="btn" onclick="refreshAll()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+              <button class="btn" onclick="openSettings()"><i class="fa-solid fa-gear"></i> Settings</button>
+              <button class="btn danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+
+            <div id="viewArea"></div>
           </div>
-          <input type="file" id="hiddenFileInput" hidden accept=".zip,.py" onchange="handleFileSelect(event)" />
-          <div id="botsContainer" class="bots-list">loading...</div>
-        </div>`;
+
+          <div class="side-stack">
+            <div class="card mini">
+              <div class="section-title">
+                <h2>Quick Stats</h2>
+                <span>live overview</span>
+              </div>
+              <div class="stat-list" id="quickStats">
+                <div class="stat-row"><span class="muted">Uptime</span><b id="sUptime">--</b></div>
+                <div class="stat-row"><span class="muted">Total Apps</span><b id="sTotal">0</b></div>
+                <div class="stat-row"><span class="muted">Memory</span><b id="sMem">0 MB</b></div>
+                <div class="stat-row"><span class="muted">Status</span><b id="sStatus">Online</b></div>
+              </div>
+            </div>
+
+            <div class="card mini">
+              <div class="section-title">
+                <h2>Shortcuts</h2>
+                <span>one tap actions</span>
+              </div>
+              <div class="stat-list">
+                <button class="btn good" style="width:100%;justify-content:center" onclick="document.getElementById('hiddenFileInput').click()">
+                  <i class="fa-solid fa-file-arrow-up"></i> Upload ZIP / PY
+                </button>
+                <button class="btn" style="width:100%;justify-content:center" onclick="openLogsAll()">
+                  <i class="fa-solid fa-scroll"></i> View Logs
+                </button>
+                <button class="btn" style="width:100%;justify-content:center" onclick="openSettings()">
+                  <i class="fa-solid fa-sliders"></i> Panel Settings
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <input type="file" id="hiddenFileInput" hidden accept=".zip,.py" onchange="handleFileSelect(event)" />
+      `;
+
+      renderCurrentView();
     }
 
-    async function refreshOverview() {
-      try {
-        const data = await apiFetch(`${API}/api/overview`);
-        document.getElementById('serverStatus').innerHTML = `<span class="dot ok"></span> ${data.server_uptime || 'online'}`;
-        document.getElementById('statsChips').innerHTML = `
-          <div class="chip"><i class="fas fa-play-circle"></i> ${data.running_apps || 0} running</div>
-          <div class="chip"><i class="fas fa-stop-circle"></i> ${(data.total_apps||0)-(data.running_apps||0)} stopped</div>
-          <div class="chip"><i class="fas fa-memory"></i> ${data.memory?.percent || 0}% RAM</div>
-          <div class="chip"><i class="fas fa-microchip"></i> ${data.cpu || 0}% CPU</div>`;
-      } catch (e) { /* ignore */ }
-    }
+    function renderCurrentView(){
+      if (!authToken) return;
+      const viewArea = document.getElementById('viewArea');
+      const title = document.getElementById('viewTitle');
+      const sub = document.getElementById('viewSubtitle');
 
-    async function fetchApps() {
-      try {
-        const data = await apiFetch(`${API}/my_apps`, 'POST', { token: authToken });
-        appsData = data.apps || [];
-      } catch (e) { appsData = []; }
-      renderBots();
-    }
-
-    function renderBots() {
-      const container = document.getElementById('botsContainer');
-      if (!container) return;
-      const query = (document.getElementById('searchBots')?.value || '').toLowerCase();
-      const filtered = appsData.filter(a => a.name.toLowerCase().includes(query));
-      if (!filtered.length) {
-        container.innerHTML = '<div style="color:#94a3b8; padding:20px; text-align:center">No bots found.</div>';
-        return;
+      if (currentView === 'dashboard'){
+        title.textContent = 'Dashboard';
+        sub.textContent = 'Overview and control center';
+        viewArea.innerHTML = `
+          <div class="bots">
+            ${renderBotsMarkup()}
+          </div>
+        `;
       }
-      container.innerHTML = filtered.map(bot => `
-        <div class="bot-card">
-          <div class="bot-header">
-            <span class="bot-name"><i class="fas fa-cube"></i> ${escHtml(bot.name)}</span>
-            <span class="run-badge ${bot.running ? 'on' : 'off'}">${bot.running ? 'RUNNING' : 'STOPPED'}</span>
+
+      if (currentView === 'bots'){
+        title.textContent = 'Bots';
+        sub.textContent = 'Manage all your apps here';
+        viewArea.innerHTML = `
+          <div class="bots">
+            ${renderBotsMarkup()}
           </div>
+        `;
+      }
+
+      if (currentView === 'deploy'){
+        title.textContent = 'Deploy';
+        sub.textContent = 'Upload and launch apps';
+        viewArea.innerHTML = `
+          <div class="card" style="margin-top:12px;background:rgba(255,255,255,.03)">
+            <div class="section-title"><h2>Deploy Wizard</h2><span>single file / zip upload</span></div>
+            <p class="muted" style="font-size:.88rem;line-height:1.6">
+              Use the upload button below to deploy a new bot. If your backend supports extra deploy metadata,
+              you can extend this UI later without changing the layout.
+            </p>
+            <div class="toolbar" style="margin-top:14px">
+              <button class="btn primary" onclick="document.getElementById('hiddenFileInput').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Choose File
+              </button>
+              <button class="btn" onclick="openSettings()"><i class="fa-solid fa-gear"></i> Settings</button>
+            </div>
+          </div>
+          <div class="bots" style="margin-top:12px">${renderBotsMarkup()}</div>
+        `;
+      }
+
+      if (currentView === 'settings'){
+        title.textContent = 'Settings';
+        sub.textContent = 'Security and panel options';
+        viewArea.innerHTML = `
+          <div class="card" style="margin-top:12px;background:rgba(255,255,255,.03)">
+            <div class="section-title"><h2>Panel Settings</h2><span>UI only</span></div>
+            <div class="stat-list">
+              <div class="stat-row"><span class="muted">Theme</span><b>Dark Glass</b></div>
+              <div class="stat-row"><span class="muted">Auto Refresh</span><b>12s</b></div>
+              <div class="stat-row"><span class="muted">Mobile Mode</span><b>Enabled</b></div>
+              <div class="stat-row"><span class="muted">Auth</span><b>Session Token</b></div>
+            </div>
+          </div>
+          <div class="bots" style="margin-top:12px">${renderBotsMarkup()}</div>
+        `;
+      }
+    }
+
+    function renderBotsMarkup(){
+      const query = (document.getElementById('searchBots')?.value || '').trim().toLowerCase();
+      const filtered = appsData.filter(a => (a.name || '').toLowerCase().includes(query));
+
+      if (!filtered.length){
+        return `<div class="card" style="background:rgba(255,255,255,.03);text-align:center;color:#9cb0c9;padding:22px;border-radius:20px">
+          No bots found.
+        </div>`;
+      }
+
+      return filtered.map(bot => `
+        <div class="bot">
+          <div class="bot-head">
+            <div class="bot-name">
+              <i class="fa-solid fa-cube"></i>
+              <span>${escHtml(bot.name)}</span>
+            </div>
+            <span class="badge ${bot.running ? 'on' : 'off'}">${bot.running ? 'RUNNING' : 'STOPPED'}</span>
+          </div>
+
           <div class="bot-meta">
-            <span>⬆ ${bot.uptime || '0s'}</span>
-            <span>📁 ${bot.files_count || 0} files</span>
-            <span>📊 ${bot.memory_mb || 0} MB</span>
+            <span><i class="fa-regular fa-clock"></i> ${escHtml(bot.uptime || '0s')}</span>
+            <span><i class="fa-solid fa-folder-open"></i> ${Number(bot.files_count || 0)} files</span>
+            <span><i class="fa-solid fa-memory"></i> ${Number(bot.memory_mb || 0)} MB</span>
           </div>
+
           <div class="bot-actions">
-            <button class="btn btn-small" onclick="act('${escJs(bot.name)}','start')"><i class="fas fa-play"></i></button>
-            <button class="btn btn-small" onclick="act('${escJs(bot.name)}','stop')"><i class="fas fa-stop"></i></button>
-            <button class="btn btn-small" onclick="act('${escJs(bot.name)}','restart')"><i class="fas fa-redo-alt"></i></button>
-            <button class="btn btn-small" onclick="openFileManager('${escJs(bot.name)}')"><i class="fas fa-folder-open"></i> Files</button>
-            <button class="btn btn-small" onclick="act('${escJs(bot.name)}','delete')"><i class="fas fa-trash"></i></button>
+            <button class="btn small" onclick="act('${escJs(bot.name)}','start')"><i class="fa-solid fa-play"></i> Start</button>
+            <button class="btn small" onclick="act('${escJs(bot.name)}','stop')"><i class="fa-solid fa-stop"></i> Stop</button>
+            <button class="btn small" onclick="act('${escJs(bot.name)}','restart')"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+            <button class="btn small" onclick="openFileManager('${escJs(bot.name)}')"><i class="fa-solid fa-folder-tree"></i> Files</button>
+            <button class="btn small danger" onclick="act('${escJs(bot.name)}','delete')"><i class="fa-solid fa-trash"></i> Delete</button>
           </div>
-          <div class="log-preview" onclick="openFileManager('${escJs(bot.name)}')">${escHtml(bot.logs || 'click for logs')}</div>
-        </div>`).join('');
+
+          <div class="log" onclick="openLogs('${escJs(bot.name)}')">${escHtml((bot.logs || 'click to view logs').slice(0,600))}</div>
+        </div>
+      `).join('');
     }
 
-    function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    function escJs(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+    async function refreshOverview(){
+      try{
+        const data = await apiFetch(`${API}/api/overview`);
+        const running = Number(data.running_apps || 0);
+        const total = Number(data.total_apps || 0);
+        const stopped = Math.max(total - running, 0);
+        const cpu = Number(data.cpu || 0);
+        const memPct = Number(data.memory?.percent || 0);
+        const memUsed = Number(data.memory?.used_mb || 0);
 
-    async function act(name, action) {
+        qs('#serverStatus').innerHTML = `<span class="dot ok"></span><span>${escHtml(data.server_uptime || 'online')}</span>`;
+        qs('#mRunning').textContent = running;
+        qs('#mStopped').textContent = stopped;
+        qs('#mCPU').textContent = `${cpu}%`;
+        qs('#mRAM').textContent = `${memPct}%`;
+        qs('#mRAMSub').textContent = `${memUsed} MB used`;
+        qs('#sUptime').textContent = data.server_uptime || '--';
+        qs('#sTotal').textContent = total;
+        qs('#sMem').textContent = `${memUsed} MB`;
+        qs('#sStatus').textContent = 'Online';
+        qs('#lastRefresh').textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+        const chips = [
+          { icon:'fa-play-circle', text:`${running} running` },
+          { icon:'fa-stop-circle', text:`${stopped} stopped` },
+          { icon:'fa-memory', text:`${memPct}% RAM` },
+          { icon:'fa-microchip', text:`${cpu}% CPU` }
+        ];
+        qs('#statsChips').innerHTML = chips.map(c => `
+          <div class="chip"><i class="fa-solid ${c.icon}"></i><span>${escHtml(c.text)}</span></div>
+        `).join('');
+      }catch(e){
+        qs('#serverStatus').innerHTML = `<span class="dot"></span><span>offline</span>`;
+      }
+    }
+
+    async function fetchApps(){
+      try{
+        const data = await apiFetch(`${API}/my_apps`, 'POST', { token: authToken });
+        appsData = Array.isArray(data.apps) ? data.apps : [];
+      }catch(e){
+        appsData = [];
+      }
+      renderCurrentView();
+    }
+
+    async function refreshAll(){
+      if (!authToken) return;
+      await refreshOverview();
+      await fetchApps();
+    }
+
+    async function act(name, action){
       if (action === 'delete' && !confirm(`Delete ${name}?`)) return;
-      try {
+      try{
         const res = await apiFetch(`${API}/action`, 'POST', { app_name: name, action });
-        toast(res.message || action + ' done');
+        toast(res.message || `${action} done`, 'good');
         await fetchApps();
-      } catch (e) { toast('Action failed', 'bad'); }
+        await refreshOverview();
+      }catch(e){
+        toast('Action failed', 'bad');
+      }
     }
 
-    function handleFileSelect(ev) {
+    function handleFileSelect(ev){
       const file = ev.target.files[0];
       if (!file) return;
       uploadFile(file);
+      ev.target.value = '';
     }
 
-    async function uploadFile(file) {
+    async function uploadFile(file){
       const fd = new FormData();
       fd.append('file', file);
-      try {
-        const res = await fetch(`${API}/upload`, { method: 'POST', headers: authHeaders(), body: fd });
-        const data = await res.json();
-        toast(data.message || 'Deployed', 'ok');
-        fetchApps();
-      } catch (e) { toast('Upload failed', 'bad'); }
+      try{
+        const res = await fetch(`${API}/upload`, { method:'POST', headers: authHeaders(), body: fd });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'upload failed');
+        toast(data.message || 'Deployed', 'good');
+        await refreshAll();
+      }catch(e){
+        toast('Upload failed', 'bad');
+      }
     }
 
-    function openFileManager(appName) {
-      fileState = { app: appName, path: '', items: [] };
-      document.getElementById('modalContainer').innerHTML = `
-        <div class="modal-mask" onclick="this.onclick=null; closeModal()">
-          <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="flex-row" style="justify-content:space-between">
-              <h3>📂 ${escHtml(appName)}</h3>
-              <button class="btn btn-small" onclick="closeModal()">✕</button>
-            </div>
-            <div class="flex-row" style="margin:8px 0">
-              <button class="btn btn-small" onclick="fileUp()">⬆ Up</button>
-              <button class="btn btn-small" onclick="fileNew()">+File</button>
-              <button class="btn btn-small" onclick="fileMkdir()">+Folder</button>
-            </div>
-            <div id="fileListArea" style="max-height:200px; overflow:auto">loading...</div>
-            <input id="editFilePath" placeholder="filename.py" style="width:100%; margin-top:10px; background:#0f1a2b; border-radius:20px; padding:8px; color:white" />
-            <textarea id="editContent" placeholder="file content..."></textarea>
-            <button class="btn btn-primary" onclick="saveFile()">💾 Save</button>
+    function setView(view){
+      currentView = view;
+      qsa('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.nav === view));
+      renderCurrentView();
+    }
+
+    function openDeploy(){
+      setView('deploy');
+    }
+
+    function openSettings(){
+      setView('settings');
+    }
+
+    function openLogsAll(){
+      currentView = 'bots';
+      setView('bots');
+      toast('Open a bot card to view its logs', 'warn');
+      window.scrollTo({ top: 0, behavior:'smooth' });
+    }
+
+    function openLogs(appName){
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3><i class="fa-solid fa-scroll"></i> Logs • ${escHtml(appName)}</h3>
+            <p>Live log preview and quick actions</p>
           </div>
-        </div>`;
+          <div class="modal-actions">
+            <button class="btn small" onclick="refreshLogs('${escJs(appName)}')"><i class="fa-solid fa-rotate"></i> Refresh</button>
+            <button class="btn small" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <textarea id="logsBox" class="textarea" readonly placeholder="Loading logs..."></textarea>
+      `);
+      refreshLogs(appName);
+    }
+
+    async function refreshLogs(appName){
+      try{
+        const data = await apiFetch(`${API}/logs`, 'POST', { token: authToken, app_name: appName });
+        const box = document.getElementById('logsBox');
+        if (box) box.value = data.logs || 'No logs yet.';
+      }catch(e){
+        const box = document.getElementById('logsBox');
+        if (box) box.value = 'Failed to load logs.';
+      }
+    }
+
+    function openFileManager(appName){
+      fileState = { app: appName, path: '' };
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3><i class="fa-solid fa-folder-tree"></i> Files • ${escHtml(appName)}</h3>
+            <p>Browse, open and save app files</p>
+          </div>
+          <div class="modal-actions">
+            <button class="btn small" onclick="fileUp()"><i class="fa-solid fa-level-up-alt"></i> Up</button>
+            <button class="btn small" onclick="fileNew()"><i class="fa-solid fa-file-circle-plus"></i> New</button>
+            <button class="btn small" onclick="fileMkdir()"><i class="fa-solid fa-folder-plus"></i> Folder</button>
+            <button class="btn small" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+
+        <div id="fileBreadcrumb" class="muted" style="font-size:.82rem;margin-bottom:10px">/</div>
+        <div id="fileListArea" class="file-list"><div class="file-item"><span>Loading...</span></div></div>
+
+        <input id="editFilePath" class="input" style="margin-top:10px" placeholder="path/file.py" />
+        <textarea id="editContent" class="textarea" placeholder="File content..."></textarea>
+        <div class="modal-actions" style="margin-top:10px">
+          <button class="btn primary" onclick="saveFile()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+          <button class="btn" onclick="loadFileList()"><i class="fa-solid fa-rotate"></i> Reload</button>
+        </div>
+      `);
       loadFileList();
     }
 
-    async function loadFileList() {
+    function openModal(content){
+      document.getElementById('modalRoot').innerHTML = `
+        <div class="modal-mask" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            ${content}
+          </div>
+        </div>
+      `;
+    }
+
+    function closeModal(){
+      document.getElementById('modalRoot').innerHTML = '';
+    }
+
+    async function loadFileList(){
       const area = document.getElementById('fileListArea');
+      const crumb = document.getElementById('fileBreadcrumb');
       if (!area) return;
-      try {
-        const data = await apiFetch(`${API}/files/list`, 'POST', { token:authToken, app_name:fileState.app, path:fileState.path });
-        fileState.items = data.items || [];
-        area.innerHTML = fileState.items.map(i => `
-          <div style="padding:6px; cursor:pointer; border-bottom:1px solid #1e293b" onclick="fileOpen('${escJs(i.path)}','${i.type}')">
-            <i class="fas fa-${i.type==='dir'?'folder':'file'}"></i> ${escHtml(i.name)}
-          </div>`).join('') || 'empty';
-      } catch (e) { area.innerHTML = 'error'; }
+      try{
+        const data = await apiFetch(`${API}/files/list`, 'POST', {
+          token: authToken,
+          app_name: fileState.app,
+          path: fileState.path
+        });
+        const items = Array.isArray(data.items) ? data.items : [];
+        crumb.textContent = '/' + (fileState.path || '');
+        area.innerHTML = items.length ? items.map(i => `
+          <div class="file-item" onclick="fileOpen('${escJs(i.path)}','${escJs(i.type)}')">
+            <div class="file-left">
+              <i class="fa-solid fa-${i.type === 'dir' ? 'folder' : 'file-lines'}"></i>
+              <span>${escHtml(i.name)}</span>
+            </div>
+            <span class="muted" style="font-size:.75rem">${escHtml(i.type)}</span>
+          </div>
+        `).join('') : `<div class="file-item"><span class="muted">Empty folder</span></div>`;
+      }catch(e){
+        area.innerHTML = `<div class="file-item"><span class="muted">Failed to load files</span></div>`;
+      }
     }
 
-    async function fileOpen(path, type) {
-      if (type === 'dir') { fileState.path = path; loadFileList(); return; }
-      const data = await apiFetch(`${API}/files/read`, 'POST', { token:authToken, app_name:fileState.app, path });
-      document.getElementById('editFilePath').value = path;
-      document.getElementById('editContent').value = data.content || '';
+    async function fileOpen(path, type){
+      if (type === 'dir'){
+        fileState.path = path;
+        loadFileList();
+        return;
+      }
+      try{
+        const data = await apiFetch(`${API}/files/read`, 'POST', {
+          token: authToken,
+          app_name: fileState.app,
+          path
+        });
+        document.getElementById('editFilePath').value = path;
+        document.getElementById('editContent').value = data.content || '';
+      }catch(e){
+        toast('Could not open file', 'bad');
+      }
     }
 
-    function fileUp() {
+    function fileUp(){
       if (!fileState.path) return;
       const parts = fileState.path.split('/').filter(Boolean);
       parts.pop();
       fileState.path = parts.join('/');
       loadFileList();
     }
-    function fileNew() { document.getElementById('editFilePath').value = ''; document.getElementById('editContent').value = ''; }
-    async function fileMkdir() {
-      const name = prompt('folder name');
-      if (!name) return;
-      await apiFetch(`${API}/files/mkdir`, 'POST', { token:authToken, app_name:fileState.app, path:name });
-      loadFileList();
+
+    function fileNew(){
+      const p = document.getElementById('editFilePath');
+      const c = document.getElementById('editContent');
+      if (p) p.value = '';
+      if (c) c.value = '';
     }
-    async function saveFile() {
+
+    async function fileMkdir(){
+      const name = prompt('Folder name');
+      if (!name) return;
+      try{
+        await apiFetch(`${API}/files/mkdir`, 'POST', {
+          token: authToken,
+          app_name: fileState.app,
+          path: name
+        });
+        toast('Folder created', 'good');
+        loadFileList();
+      }catch(e){
+        toast('Folder create failed', 'bad');
+      }
+    }
+
+    async function saveFile(){
       const path = document.getElementById('editFilePath').value.trim();
       const content = document.getElementById('editContent').value;
-      if (!path) return toast('path missing', 'bad');
-      await apiFetch(`${API}/files/write`, 'POST', { token:authToken, app_name:fileState.app, path, content });
-      toast('saved');
-      loadFileList();
+      if (!path) return toast('Path missing', 'warn');
+      try{
+        await apiFetch(`${API}/files/write`, 'POST', {
+          token: authToken,
+          app_name: fileState.app,
+          path,
+          content
+        });
+        toast('File saved', 'good');
+        loadFileList();
+      }catch(e){
+        toast('Save failed', 'bad');
+      }
     }
 
-    function closeModal() { document.getElementById('modalContainer').innerHTML = ''; }
-
-    async function login() {
+    async function login(){
       const pw = document.getElementById('passInput')?.value;
       if (!pw) return;
-      const res = await fetch(`${API}/auth`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw}) });
-      const data = await res.json();
-      if (res.ok) {
+      try{
+        const res = await fetch(`${API}/auth`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ password: pw })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'wrong password');
         authToken = data.token;
         sessionStorage.setItem('sagor_token', authToken);
-        renderShell();
-        refreshAll();
-      } else toast(data.message || 'wrong', 'bad');
+        renderApp();
+        await refreshAll();
+        toast('Unlocked', 'good');
+      }catch(e){
+        toast('Wrong password', 'bad');
+      }
     }
 
-    function logout() {
+    function logout(){
       authToken = '';
       sessionStorage.removeItem('sagor_token');
-      renderShell();
+      appsData = [];
+      document.getElementById('modalRoot').innerHTML = '';
+      renderLogin();
     }
 
-    async function refreshAll() {
-      if (!authToken) return;
-      await refreshOverview();
-      await fetchApps();
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Enter' && !authToken && document.getElementById('passInput')) login();
+    });
+
+    function init(){
+      if (!authToken){
+        renderLogin();
+      } else {
+        renderApp();
+        refreshAll();
+        setInterval(() => {
+          if (authToken) refreshAll();
+        }, 12000);
+      }
     }
 
-    window.onload = () => {
-      renderShell();
-      if (authToken) refreshAll();
-      setInterval(() => { if (authToken) refreshAll(); }, 12000);
-    };
+    window.addEventListener('load', init);
+    window.setView = setView;
+    window.openDeploy = openDeploy;
+    window.openSettings = openSettings;
+    window.openLogsAll = openLogsAll;
+    window.openLogs = openLogs;
+    window.openFileManager = openFileManager;
+    window.closeModal = closeModal;
+    window.handleFileSelect = handleFileSelect;
+    window.uploadFile = uploadFile;
+    window.refreshAll = refreshAll;
+    window.act = act;
+    window.login = login;
+    window.logout = logout;
+    window.fileUp = fileUp;
+    window.fileNew = fileNew;
+    window.fileMkdir = fileMkdir;
+    window.saveFile = saveFile;
+    window.fileOpen = fileOpen;
+    window.refreshLogs = refreshLogs;
   </script>
 </body>
   </html>
